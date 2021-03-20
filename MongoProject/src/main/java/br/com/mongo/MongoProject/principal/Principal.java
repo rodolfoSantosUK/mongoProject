@@ -3,6 +3,7 @@ package br.com.mongo.MongoProject.principal;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import org.bson.Document;
 
 import java.util.Arrays;
@@ -22,6 +23,9 @@ public class Principal {
                 .append("habilidades", Arrays.asList(new Document().append("nome", "Ingles").append("nivel", "Básico"),
                         new Document().append("nome", "Espanhol").append("nivel", "Básico")));
         alunos.insertOne(novoAluno);
+
+        alunos.updateOne(Filters.eq("nome", "Rodolfo"),
+                new Document("$set", new Document("nome", "Rodolfo Santos")));
 
         mongoClient.close();
     }
