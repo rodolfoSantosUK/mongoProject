@@ -13,8 +13,8 @@ public class Principal {
     public static void main(String[] args) {
         MongoClient mongoClient = new MongoClient();
         MongoDatabase mongoDatabase = mongoClient.getDatabase("local");
-        MongoCollection<Document> alunos = mongoDatabase.getCollection("alunos");
-        Document aluno = alunos.find().first();
+        MongoCollection<Document> collectionAlunos = mongoDatabase.getCollection("alunos");
+        Document aluno = collectionAlunos.find().first();
         System.out.println(aluno);
 
         Document novoAluno =    new Document("nome", "Rodolfo")
@@ -22,10 +22,12 @@ public class Principal {
                 .append("notas", Arrays.asList(10, 9, 8))
                 .append("habilidades", Arrays.asList(new Document().append("nome", "Ingles").append("nivel", "Básico"),
                         new Document().append("nome", "Espanhol").append("nivel", "Básico")));
-        alunos.insertOne(novoAluno);
+        collectionAlunos.insertOne(novoAluno);
 
-        alunos.updateOne(Filters.eq("nome", "Rodolfo"),
+        collectionAlunos.updateOne(Filters.eq("nome", "Rodolfo"),
                 new Document("$set", new Document("nome", "Rodolfo Santos")));
+
+        collectionAlunos.deleteOne( Filters.eq("nome", "Felipe"));
 
         mongoClient.close();
     }
