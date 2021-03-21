@@ -67,4 +67,9 @@ public class Aluno {
     public void setHabilidades(List<Habilidade> habilidades) {
         this.habilidades = habilidades;
     }
+
+    public Aluno criarId() {
+        setId(new ObjectId());
+        return this;
+    }
 }
